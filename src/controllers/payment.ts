@@ -2,8 +2,11 @@ import { TryCatch } from "../middlewares/error.js";
 import { Coupon } from "../models/coupon.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { stripe } from "../app.js";
+//import { ShippingInfoType, NewUserRequestBody } from "../types/types.js";
+
+
 export const createPaymentIntent = TryCatch(async (req, res, next) => {
-  const { amount } = req.body;
+  const { amount, name,address } = req.body;
 
   if (!amount) return next(new ErrorHandler("Please enter amount", 400));
 
@@ -11,6 +14,15 @@ export const createPaymentIntent = TryCatch(async (req, res, next) => {
     amount: Number(amount) * 100,
     currency: 'usd',
     description: 'Software development services',
+    shipping: {
+      name,
+      address: {
+        line1: address,
+        country: 'IN'
+      }
+    },
+  //   customer : "" ,
+  // shipping
   });
 
   return res.status(201).json({
