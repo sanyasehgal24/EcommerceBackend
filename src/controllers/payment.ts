@@ -6,7 +6,8 @@ import { stripe } from "../app.js";
 
 
 export const createPaymentIntent = TryCatch(async (req, res, next) => {
-  const { amount, payment_method , name , address} = req.body;
+ // const { amount,payment_method,name,address } = req.body;
+ const { amount } = req.body;
 
   if (!amount) return next(new ErrorHandler("Please enter amount", 400));
 
@@ -14,14 +15,14 @@ export const createPaymentIntent = TryCatch(async (req, res, next) => {
     amount: Number(amount) * 100,
     currency: 'usd',
     description: 'Software development services',
-    payment_method,
-    shipping: {
-      name,
-      address: {
-        line1: address,
-        country: 'IN'
-      }
-    },
+    // payment_method,
+    // shipping: {
+    //   name,
+    //   address: {
+    //     line1: address,
+    //     country: 'IN'
+    //   }
+    // },
   //   customer : "" ,
   // shipping
   });
